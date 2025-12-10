@@ -11,12 +11,29 @@ Hindari kata-kata negatif. Gunakan pendekatan "Sandwich" (Pujian - Saran - Pujia
 Karena ini TK Islam, selipkan nilai-nilai keislaman jika relevan pada bagian karakter atau agama.
 `;
 
+// Helper to safely get API Key from various environments (Node or Vite/Vercel)
+const getApiKey = (): string | undefined => {
+  // @ts-ignore
+  if (typeof process !== 'undefined' && process.env?.API_KEY) {
+    // @ts-ignore
+    return process.env.API_KEY;
+  }
+  // @ts-ignore
+  if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_KEY) {
+    // @ts-ignore
+    return import.meta.env.VITE_API_KEY;
+  }
+  return undefined;
+};
+
 export const generateReportNarrative = async (data: ReportData): Promise<{ narrative: string; teacherNote: string }> => {
-  if (!process.env.API_KEY) {
-    throw new Error("API Key is missing");
+  const apiKey = getApiKey();
+
+  if (!apiKey) {
+    throw new Error("API Key is missing. Please check your Vercel Environment Variables (API_KEY or VITE_API_KEY).");
   }
 
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey });
 
   // Prepare a simplified prompt payload to save tokens and focus the model
   const promptPayload = {
