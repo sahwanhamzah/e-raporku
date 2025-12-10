@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-Rapor TK Islam Anwaarul Hidayah Al-Falah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#1F2937', 
+              'primary-dark': '#000000',
+              secondary: '#E6B970', 
+              'paper-bg': '#FFFFFF',
+              'app-bg': '#F3F4F6',
+              accent: '#4A8C84'
+            },
+            fontFamily: {
+              sans: ['Inter', 'Arial', 'sans-serif'], 
+              heading: ['Nunito', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* --- GLOBAL PRINT STYLES --- */
+      @media print {
+        @page {
+          size: A4 portrait;
+          /* TOP RIGHT BOTTOM LEFT */
+          margin: 20mm 15mm 20mm 25mm !important; 
+        }
+
+        body {
+          margin: 0;
+          padding: 0;
+          background: white !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        /* Hide Layout Elements */
+        .no-print { display: none !important; }
+
+        /* Container Reset for Print */
+        .print-container {
+          width: 100% !important;
+          max-width: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          box-shadow: none !important;
+          border: none !important;
+          min-height: auto !important;
+        }
+
+        /* Typography & Inputs */
+        input, select, textarea {
+          border: none !important;
+          background: transparent !important;
+          padding: 0 !important;
+          font-family: inherit;
+          color: black !important;
+          -webkit-appearance: none;
+          appearance: none;
+        }
+        
+        /* Replace Textareas with Divs logic handled in React, 
+           but ensure inputs look like text */
+        input::placeholder { color: transparent !important; }
+        
+        /* Table Borders */
+        .report-table { border: 1px solid #000 !important; border-collapse: collapse; width: 100%; }
+        .report-table th, .report-table td { border: 1px solid #000 !important; padding: 6px 8px; }
+
+        /* Page Breaks */
+        .page-break { page-break-before: always !important; }
+        .avoid-break { page-break-inside: avoid !important; }
+      }
+
+      /* --- SCREEN STYLES --- */
+      .report-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #000;
+      }
+      .report-table th, .report-table td {
+        border: 1px solid #000;
+        padding: 8px;
+      }
+
+      /* PDF Generating Mode (Specific for html2pdf) */
+      .pdf-generating {
+        /* Content width = 210mm - 25mm(L) - 15mm(R) = 170mm */
+        width: 170mm !important; 
+        max-width: 170mm !important;
+        margin: 0 !important; 
+        padding: 0 !important;
+      }
+      
+      /* Switch Textarea to Div during PDF Generation to show full text */
+      .pdf-generating .input-area {
+        display: none !important;
+      }
+      .pdf-generating .print-view {
+        display: block !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-app-bg text-gray-900">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
