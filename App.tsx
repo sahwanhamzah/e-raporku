@@ -168,13 +168,26 @@ const App: React.FC = () => {
   const handleCharacterChange = (id: string, score: CharacterScore) => {
     setData(prev => ({ ...prev, character: prev.character.map(item => item.id === id ? { ...item, score } : item) }));
   };
+
+  // Check API Key existence safely
+  const hasApiKey = () => {
+    // @ts-ignore
+    if (typeof process !== 'undefined' && process.env?.API_KEY) return true;
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_KEY) return true;
+    return false;
+  };
+
   const handleAiGenerate = async () => {
-    if (!process.env.API_KEY) { alert("API Key belum diset!"); return; }
+    if (!hasApiKey()) { 
+      alert("API Key belum diset! Pastikan Anda sudah mengatur Environment Variable 'VITE_API_KEY' di Vercel."); 
+      return; 
+    }
     setIsGenerating(true); setError(null);
     try {
       const result = await generateReportNarrative(data);
       setData(prev => ({ ...prev, narrative: result.narrative, teacherNote: result.teacherNote }));
-    } catch (e) { setError("Gagal menghasilkan narasi."); } finally { setIsGenerating(false); }
+    } catch (e) { setError("Gagal menghasilkan narasi. Periksa koneksi atau kuota API."); } finally { setIsGenerating(false); }
   };
 
   // HTML2PDF Logic
