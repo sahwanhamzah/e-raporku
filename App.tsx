@@ -199,7 +199,7 @@ const App: React.FC = () => {
     const element = document.querySelector('.print-container');
     const opt = {
       // Standard A4 Margins: Top: 20mm, Right: 15mm, Bottom: 20mm, Left: 25mm
-      margin: [20, 15, 21, 15], 
+      margin: [15, 15, 21, 15], 
       filename: `Rapor_${data.student.name.replace(/\s+/g, '_')}_${data.student.semester}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
